@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
+apply from: "$rootDir/key_variables.gradle"
 
 android {
     compileSdkVersion 29
@@ -16,10 +17,36 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            if (project.hasProperty("Keys.repo")) {
+                def projectPropsFile = file(project.property("Keys.repo") + "/KeystoreData.properties")
+                if (projectPropsFile.exists()) {
+                    Properties props = new Properties()
+                    props.load(new FileInputStream(projectPropsFile))
+                    storeFile file(file(project.property("Keys.repo") + props['RELEASE_STORE_FILE']))
+                    storePassword props['RELEASE_STORE_PASS']
+                    keyAlias props['RELEASE_ALIAS']
+                    keyPassword props['RELEASE_KEY_PASS']
+                }
+            } else {
+                println "======================================================="
+                println "[ERROR] - Please configure release-compilation environment - e.g. in ~/.signing directory"
+                println "======================================================="
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            buildConfigField "String", "COINMARKET_URL", '"https://pro-api.coinmarketcap.com"'
+            buildConfigField "String", "API_KEY", "\"${api_key}\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "COINMARKET_URL", '"https://pro-api.coinmarketcap.com"'
+            buildConfigField "String", "API_KEY", api_key
         }
     }
     compileOptions {
@@ -29,6 +56,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+ext {
+    gson_version = '2.4.0'
+    okhttp_version = '4.9.0'
+    okhttp_logging_version = '4.9.0'
+    retrofit_version = '2.9.0'
 }
 
 dependencies {
@@ -42,4 +76,10 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$gson_version"
+    //other
 }
