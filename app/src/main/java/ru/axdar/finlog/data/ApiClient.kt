@@ -26,6 +26,7 @@ class ApiClient {
             .addInterceptor(Interceptor {
                 val original: Request = it.request()
                 val request: Request = original.newBuilder()
+                    .header("Accept", "application/json")
                     .header(HEADER_NAME, BuildConfig.API_KEY)
                     .build()
                 return@Interceptor it.proceed(request)
