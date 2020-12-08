@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_quotes"
+        android:enabled="true"
+        android:icon="@drawable/ic_bm_quote"
+        android:title="@string/menu_quotes" />
+    <item
+        android:id="@+id/menu_transactions"
+        android:enabled="true"
+        android:icon="@drawable/ic_bm_add_transaction"
+        android:title="@string/menu_transactions" />
+    <item
+        android:id="@+id/menu_planner"
+        android:enabled="true"
+        android:icon="@drawable/ic_bm_planner"
+        android:title="@string/menu_planner" />
+</menu>

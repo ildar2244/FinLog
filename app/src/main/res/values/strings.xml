@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FinLog</string>
+
+    <!-- Bottom View -->
+    <string name="menu_quotes">Котировки</string>
+    <string name="menu_transactions">Сделки</string>
+    <string name="menu_planner">Планер</string>
+    <string name="menu_last_item">DOP</string>
+
+    <!-- other -->
 </resources>
