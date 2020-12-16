@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.axdar.finlog.R
+import ru.axdar.finlog.data.MarketQuotesRepositoryImpl
 import ru.axdar.finlog.databinding.FragmentQuotesBinding
+import ru.axdar.finlog.domain.QuotesUseCase
 
 class QuotesFragment : Fragment() {
 
@@ -55,9 +58,20 @@ class QuotesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.quoteLiveData.observe(this) {
-            it?.let {
-                adapter.submitList(it)
+        viewModel.apply {
+
+            loading.observe(viewLifecycleOwner) { isShow ->
+                //pb_images.visibility = if (isShow) View.VISIBLE else View.GONE
+            }
+
+            error.observe(viewLifecycleOwner) { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
+
+            quoteLiveData.observe(viewLifecycleOwner) {
+                it?.let {
+                    adapter.submitList(it)
+                }
             }
         }
     }

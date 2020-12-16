@@ -1,6 +1,6 @@
-package ru.axdar.finlog.domain.model
+package ru.axdar.finlog.presentation.quotes.model
 
-data class QuoteData(
+data class QuoteUI(
     val id: Int = 0,
     val nameShort: String = "",
     val nameFull: String = "",

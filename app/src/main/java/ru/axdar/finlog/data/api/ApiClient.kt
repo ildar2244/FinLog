@@ -1,6 +1,5 @@
-package ru.axdar.finlog.data
+package ru.axdar.finlog.data.api
 
-import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -19,7 +18,7 @@ class ApiClient {
     private fun okHttpClient(): OkHttpClient {
 
         if (BuildConfig.DEBUG) {
-            loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         }
 
         return OkHttpClient.Builder()

@@ -6,7 +6,7 @@
 
         <variable
             name="quote"
-            type="ru.axdar.finlog.domain.model.QuoteData" />
+            type="ru.axdar.finlog.presentation.quotes.model.QuoteUI" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

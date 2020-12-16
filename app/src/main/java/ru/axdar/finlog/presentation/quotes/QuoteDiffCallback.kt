@@ -2,15 +2,15 @@ package ru.axdar.finlog.presentation.quotes
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
-import ru.axdar.finlog.domain.model.QuoteData
+import ru.axdar.finlog.presentation.quotes.model.QuoteUI
 
-class QuoteDiffCallback : DiffUtil.ItemCallback<QuoteData>() {
-    override fun areItemsTheSame(oldItem: QuoteData, newItem: QuoteData): Boolean {
+class QuoteDiffCallback : DiffUtil.ItemCallback<QuoteUI>() {
+    override fun areItemsTheSame(oldItem: QuoteUI, newItem: QuoteUI): Boolean {
         return oldItem.id == newItem.id
     }
 
     @SuppressLint("DiffUtilEquals")
-    override fun areContentsTheSame(oldItem: QuoteData, newItem: QuoteData): Boolean {
+    override fun areContentsTheSame(oldItem: QuoteUI, newItem: QuoteUI): Boolean {
         return oldItem == newItem
     }
 }

@@ -1,6 +1,7 @@
-package ru.axdar.finlog.data
+package ru.axdar.finlog.data.api
 
 import retrofit2.http.GET
+import ru.axdar.finlog.data.model.CoinMarketResponse
 
 /** Created on 06.12.2020. */
 interface Api {

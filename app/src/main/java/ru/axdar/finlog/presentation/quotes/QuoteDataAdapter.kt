@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.axdar.finlog.databinding.ItemQuoteDataBinding
 import ru.axdar.finlog.domain.model.QuoteData
+import ru.axdar.finlog.presentation.quotes.model.QuoteUI
 
-class QuoteDataAdapter : ListAdapter<QuoteData, QuoteDataAdapter.ViewHolder>(QuoteDiffCallback()) {
+class QuoteDataAdapter : ListAdapter<QuoteUI, QuoteDataAdapter.ViewHolder>(QuoteDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -20,7 +21,7 @@ class QuoteDataAdapter : ListAdapter<QuoteData, QuoteDataAdapter.ViewHolder>(Quo
 
     class ViewHolder private constructor(val binding: ItemQuoteDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: QuoteData) {
+        fun bind(item: QuoteUI) {
             binding.quote = item
             binding.executePendingBindings()
         }

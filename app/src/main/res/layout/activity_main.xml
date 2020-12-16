@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="ru.axdar.finlog.presentation.main.MainViewModel" />
@@ -25,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/menu_nav_bottom"
-            onNavigationItemSelected="@{viewmodel::onNavigationItemSelected}"/>
+            bind:onNavigationItemSelected="@{viewmodel::onNavigationItemSelected}" />
 
         <FrameLayout
             android:id="@+id/container_main"
