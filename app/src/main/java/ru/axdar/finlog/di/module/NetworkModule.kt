@@ -1,5 +1,7 @@
-package ru.axdar.finlog.data.api
+package ru.axdar.finlog.di.module
 
+import dagger.Module
+import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -7,16 +9,22 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.axdar.finlog.BuildConfig
+import ru.axdar.finlog.data.api.Api
+import ru.axdar.finlog.data.Constants.HEADER_NAME
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
-/** Created on 06.12.2020. */
-class ApiClient {
+@Module
+class NetworkModule {
 
-    private val HEADER_NAME: String = "X-CMC_PRO_API_KEY"
-    private val loggingInterceptor = HttpLoggingInterceptor()
+    @Singleton
+    @Provides
+    fun provideApi(retrofit: Retrofit): Api = retrofit.create(Api::class.java)
 
-    private fun okHttpClient(): OkHttpClient {
-
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         }
@@ -35,12 +43,13 @@ class ApiClient {
             .build()
     }
 
-    fun makeService(): Api {
-        val retrofit = Retrofit.Builder()
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
             .baseUrl(BuildConfig.COINMARKET_URL)
-            .client(okHttpClient())
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        return retrofit.create(Api::class.java)
     }
 }

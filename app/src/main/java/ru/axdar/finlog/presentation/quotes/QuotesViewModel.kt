@@ -8,12 +8,11 @@ import ru.axdar.finlog.data.MarketQuotesRepositoryImpl
 import ru.axdar.finlog.domain.QuotesUseCase
 import ru.axdar.finlog.domain.model.QuoteData
 import ru.axdar.finlog.presentation.quotes.model.QuoteUI
+import javax.inject.Inject
 
-class QuotesViewModel(
-    //private val useCase: QuotesUseCase
+class QuotesViewModel @Inject constructor(
+    private val useCase: QuotesUseCase
 ) : ViewModel(), LifecycleObserver {
-
-    val useCase: QuotesUseCase = QuotesUseCase(MarketQuotesRepositoryImpl())
 
     private val _loading = MutableLiveData<Boolean>()
     private val _error = MutableLiveData<String>()

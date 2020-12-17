@@ -2,14 +2,14 @@ package ru.axdar.finlog.data
 
 import ru.axdar.finlog.core.Response
 import ru.axdar.finlog.data.api.Api
-import ru.axdar.finlog.data.api.ApiClient
 import ru.axdar.finlog.data.model.CoinMarketResponse
 import ru.axdar.finlog.domain.IMarketQuotesRepository
 import ru.axdar.finlog.domain.model.QuoteData
+import javax.inject.Inject
 
-class MarketQuotesRepositoryImpl : IMarketQuotesRepository {
-
-    private val client: Api = ApiClient().makeService()
+class MarketQuotesRepositoryImpl @Inject constructor(
+    private val client: Api
+) : IMarketQuotesRepository {
 
     override suspend fun getMarketQuotes(): Response<List<QuoteData>> {
         Response.loading<List<QuoteData>>()

@@ -1,27 +1,31 @@
 package ru.axdar.finlog.presentation.quotes
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import dagger.android.support.AndroidSupportInjection
 import ru.axdar.finlog.R
-import ru.axdar.finlog.data.MarketQuotesRepositoryImpl
 import ru.axdar.finlog.databinding.FragmentQuotesBinding
-import ru.axdar.finlog.domain.QuotesUseCase
+import javax.inject.Inject
 
 class QuotesFragment : Fragment() {
 
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel by viewModels<QuotesViewModel> { viewModelFactory }
     private lateinit var binding: FragmentQuotesBinding
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(QuotesViewModel::class.java)
-    }
+    @Inject lateinit var adapter: QuoteDataAdapter
 
-    private lateinit var adapter: QuoteDataAdapter
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +37,10 @@ class QuotesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_quotes, container, false)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        adapter = QuoteDataAdapter()
         binding.rvQuotes.adapter = adapter
 
         return binding.root
